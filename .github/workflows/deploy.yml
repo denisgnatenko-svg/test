@@ -63,6 +63,9 @@ jobs:
     steps:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.2.1
+        env:
+          DRONE_SSH_VERSION: "1.8.2"
+          PLUGIN_USER: "root"
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           port: ${{ secrets.DEPLOY_PORT }}
