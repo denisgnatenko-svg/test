@@ -19,3 +19,23 @@ def get_time() -> dict:
         "timezone": "UTC",
     }
 
+
+@app.get("/date")
+def get_date() -> dict:
+    now_utc = datetime.now(timezone.utc)
+    return {
+        "server_date_utc": now_utc.date().isoformat(),
+        "timezone": "UTC",
+    }
+
+
+@app.get("/date/local")
+def get_local_date() -> dict:
+    now_local = datetime.now().astimezone()
+    tz_name = now_local.tzinfo.tzname(now_local) if now_local.tzinfo else None
+    return {
+        "server_date_local": now_local.date().isoformat(),
+        "timezone": tz_name,
+        "utc_offset_minutes": int((now_local.utcoffset() or 0).total_seconds() // 60),
+    }
+
